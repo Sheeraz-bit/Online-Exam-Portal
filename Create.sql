@@ -1,18 +1,19 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL CHECK (role IN ('STUDENT', 'TEACHER'))
+    role VARCHAR(20) NOT NULL CHECK (role IN ('STUDENT', 'TEACHER')),
+    attempt BOOLEAN
 );
-CREATE TABLE questions (
+CREATE TABLE quiz_questions (
     id SERIAL PRIMARY KEY,
-    question_text TEXT NOT NULL,
-    option_a TEXT NOT NULL,
-    option_b TEXT NOT NULL,
-    option_c TEXT NOT NULL,
-    option_d TEXT NOT NULL,
-    correct_option CHAR(1) NOT NULL CHECK (correct_option IN ('A', 'B', 'C', 'D'))
+    question TEXT NOT NULL,
+    opta TEXT NOT NULL,
+    optb TEXT NOT NULL,
+    optc TEXT NOT NULL,
+    optd TEXT NOT NULL,
+    answer CHAR(1) NOT NULL CHECK (correct_option IN ('A', 'B', 'C', 'D'))
 );
 CREATE TABLE results (
     id SERIAL PRIMARY KEY,
