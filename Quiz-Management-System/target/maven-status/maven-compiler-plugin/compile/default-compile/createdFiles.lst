@@ -1,3 +1,4 @@
+com\example\Quiz\Management\System\ResultController.class
 com\example\Quiz\Management\System\QuestionController.class
 com\example\Quiz\Management\System\User.class
 com\example\Quiz\Management\System\UserService.class
@@ -5,12 +6,16 @@ com\example\Quiz\Management\System\Question.class
 com\example\Quiz\Management\System\UserRepository.class
 com\example\Quiz\Management\System\Quiz.class
 com\example\Quiz\Management\System\QuizManagementSystemApplication.class
+com\example\Quiz\Management\System\ResultService.class
 com\example\Quiz\Management\System\WebConfig$1.class
 com\example\Quiz\Management\System\QuizService.class
+com\example\Quiz\Management\System\ResultRepository.class
 com\example\Quiz\Management\System\ServiceConfig.class
 com\example\Quiz\Management\System\QuestionRepository.class
 com\example\Quiz\Management\System\UserController.class
 com\example\Quiz\Management\System\LoginRequest.class
 com\example\Quiz\Management\System\WebConfig.class
+com\example\Quiz\Management\System\ResultDto.class
 com\example\Quiz\Management\System\QuizController.class
+com\example\Quiz\Management\System\Result.class
 com\example\Quiz\Management\System\QuizRepository.class

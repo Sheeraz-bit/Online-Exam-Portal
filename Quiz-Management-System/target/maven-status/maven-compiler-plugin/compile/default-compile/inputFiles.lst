@@ -7,6 +7,11 @@ C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Man
 C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\QuizManagementSystemApplication.java
 C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\QuizRepository.java
 C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\QuizService.java
+C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\Result.java
+C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\ResultController.java
+C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\ResultDto.java
+C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\ResultRepository.java
+C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\ResultService.java
 C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\ServiceConfig.java
 C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\User.java
 C:\Users\Admin\Desktop\Quiz-Management-System\src\main\java\com\example\Quiz\Management\System\UserController.java

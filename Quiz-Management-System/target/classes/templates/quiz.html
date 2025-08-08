@@ -8,20 +8,16 @@
 </head>
 <body>
     <div class="container">
-    <div class="sidebar" id="question-numbers">
-    </div>
+    <div id="question-nav" class="question-nav"></div>
 
-    <div class="main-content">
-      <div class="header">
-        <div id="timer" class="timer">15:00</div>
-        <button id="submit-btn">Submit / End Exam</button>
-      </div>
+    <div class="question-area">
+      <div id="timer" class="timer"></div>
+      <button id="submit-btn" class="submit-btn">End Exam</button>
 
-      <h2 id="question">Loading question...</h2>
+      <div id="question-text" class="question-text"></div>
+      <div id="options" class="options"></div>
 
-      <div id="options"></div>
-
-      <div class="navigation">
+      <div class="nav-buttons">
         <button id="prev-btn">Previous</button>
         <button id="skip-btn">Skip</button>
         <button id="next-btn">Next</button>

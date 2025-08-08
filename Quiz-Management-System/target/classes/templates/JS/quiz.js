@@ -1,74 +1,168 @@
+const API_URL = "http://localhost:8082/questions/random";
+const RESULT_API_URL = "http://localhost:8082/api/results/submit";
+
 let questions = [];
 let currentQuestionIndex = 0;
-let score = 0;
-let timer;
+let answers = {};
+let timer; // to store interval
+let timeLeft = 15 * 60; // 15 minutes in seconds
+
+// Assume you have userId stored somewhere (e.g. after login)
+const userId = localStorage.getItem("userId"); // adjust as needed
+
+// Elements
+const questionNavDiv = document.getElementById("question-nav");
+const questionTextDiv = document.getElementById("question-text");
+const optionsDiv = document.getElementById("options");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const skipBtn = document.getElementById("skip-btn");
+const submitBtn = document.getElementById("submit-btn");
+const timerDiv = document.getElementById("timer");
 
 async function loadQuestions() {
-    try {
-        const res = await fetch("http://localhost:8082/questions/random"); // backend endpoint
-        if (!res.ok) throw new Error("Failed to fetch questions");
-        questions = await res.json();
-        startTimer(15 * 60); // 15 minutes
-        showQuestion();
-    } catch (err) {
-        console.error(err);
-        alert("Unable to load questions. Please try again later.");
-    }
-}
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error("Failed to fetch questions");
+    questions = await response.json();
 
-function showQuestion() {
-    const q = questions[currentQuestionIndex];
-    if (!q) {
-        endQuiz();
-        return;
+    if (!questions.length) {
+      alert("No questions found!");
+      return;
     }
 
-    document.getElementById("question").innerText = q.question;
-    document.getElementById("options").innerHTML = `
-        <label><input type="radio" name="option" value="${q.opta}"> ${q.opta}</label><br>
-        <label><input type="radio" name="option" value="${q.optb}"> ${q.optb}</label><br>
-        <label><input type="radio" name="option" value="${q.optc}"> ${q.optc}</label><br>
-        <label><input type="radio" name="option" value="${q.optd}"> ${q.optd}</label><br>
-    `;
+    renderQuestionNav();
+    showQuestion(0);
+    startTimer();
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-function nextQuestion() {
-    const selectedOption = document.querySelector('input[name="option"]:checked');
-    if (!selectedOption) {
-        alert("Please select an answer!");
-        return;
+function renderQuestionNav() {
+  questionNavDiv.innerHTML = "";
+  questions.forEach((q, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = i + 1;
+    btn.className = "question-nav-btn";
+    if (answers[i] !== undefined) btn.classList.add("answered");
+    if (i === currentQuestionIndex) btn.classList.add("current");
+    btn.addEventListener("click", () => showQuestion(i));
+    questionNavDiv.appendChild(btn);
+  });
+}
+
+function showQuestion(index) {
+  currentQuestionIndex = index;
+  const q = questions[index];
+
+  // Update nav buttons
+  [...questionNavDiv.children].forEach((btn, i) => {
+    btn.classList.toggle("current", i === index);
+  });
+
+  questionTextDiv.textContent = q.questionText;
+
+  optionsDiv.innerHTML = "";
+  ["optionA", "optionB", "optionC", "optionD"].forEach((optKey, i) => {
+    const optionText = q[optKey];
+    const optionId = `option-${index}-${i}`;
+
+    const label = document.createElement("label");
+    label.setAttribute("for", optionId);
+    label.textContent = optionText;
+
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "options";
+    radio.id = optionId;
+    radio.value = optionText;
+    if (answers[index] === optionText) radio.checked = true;
+
+    radio.addEventListener("change", () => {
+      answers[index] = radio.value;
+      renderQuestionNav(); // update answered status
+    });
+
+    optionsDiv.appendChild(radio);
+    optionsDiv.appendChild(label);
+    optionsDiv.appendChild(document.createElement("br"));
+  });
+
+  updateButtons();
+}
+
+function updateButtons() {
+  prevBtn.disabled = currentQuestionIndex === 0;
+  nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentQuestionIndex > 0) showQuestion(currentQuestionIndex - 1);
+});
+
+nextBtn.addEventListener("click", () => {
+  if (currentQuestionIndex < questions.length - 1) showQuestion(currentQuestionIndex + 1);
+});
+
+skipBtn.addEventListener("click", () => {
+  // Mark unanswered question as skipped (optional)
+  answers[currentQuestionIndex] = null;
+  renderQuestionNav();
+  if (currentQuestionIndex < questions.length - 1) {
+    showQuestion(currentQuestionIndex + 1);
+  }
+});
+
+submitBtn.addEventListener("click", () => {
+  if (!confirm("Are you sure you want to submit the exam?")) return;
+  submitExam();
+});
+
+function startTimer() {
+  updateTimerDisplay();
+  timer = setInterval(() => {
+    timeLeft--;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      alert("Time's up! Your exam will be submitted automatically.");
+      submitExam();
+      return;
     }
-
-    if (selectedOption.value === questions[currentQuestionIndex].answer) {
-        score++;
-    }
-
-    currentQuestionIndex++;
-    showQuestion();
+    updateTimerDisplay();
+  }, 1000);
 }
 
-function startTimer(duration) {
-    let time = duration;
-    timer = setInterval(() => {
-        let minutes = Math.floor(time / 60);
-        let seconds = time % 60;
-        document.getElementById("timer").innerText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-        time--;
-
-        if (time < 0) {
-            clearInterval(timer);
-            endQuiz();
-        }
-    }, 1000);
+function updateTimerDisplay() {
+  const mins = Math.floor(timeLeft / 60).toString().padStart(2, "0");
+  const secs = (timeLeft % 60).toString().padStart(2, "0");
+  timerDiv.textContent = `Time Left: ${mins}:${secs}`;
 }
 
-function endQuiz() {
-    clearInterval(timer);
-    document.getElementById("quiz-container").innerHTML = `
-        <h2>Quiz Completed!</h2>
-        <p>Your score is ${score} out of ${questions.length}</p>
-    `;
+async function submitExam() {
+  clearInterval(timer);
+
+  // Calculate score
+  let score = 0;
+  questions.forEach((q, i) => {
+    if (answers[i] === q.correctAnswer) score++;
+  });
+
+  try {
+    const response = await fetch(RESULT_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: Number(userId), score }),
+    });
+
+    if (!response.ok) throw new Error("Failed to submit result");
+
+    alert(`Exam submitted successfully! Your score is: ${score} / ${questions.length}`);
+    // Redirect or show result page
+    window.location.href = "result.html"; // or wherever
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-// Start when page loads
-window.onload = loadQuestions;
+loadQuestions();
