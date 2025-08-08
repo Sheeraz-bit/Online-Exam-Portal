@@ -1,4 +1,4 @@
-INSERT INTO questions (question_text, option_a, option_b, option_c, option_d, correct_option) VALUES
+INSERT INTO quiz_questions (question, opta, optb, optc, optd, answer) VALUES
 ('What is Java?', 'A platform', 'A language', 'Both platform and language', 'None of the above', 'C'),
 ('Which keyword declares a constant?', 'const', 'final', 'static', 'immutable', 'B'),
 ('Which of these is not in java.util package?', 'List', 'Map', 'Tree', 'Scanner', 'C'),
