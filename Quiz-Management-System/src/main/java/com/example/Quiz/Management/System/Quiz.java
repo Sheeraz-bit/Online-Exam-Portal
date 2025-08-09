@@ -1,7 +1,7 @@
 package com.example.Quiz.Management.System;
 
 import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,10 +11,18 @@ public class Quiz {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@JsonProperty("optA")
 	private String opta;
+	
+	@JsonProperty("optB")
 	private String optb;
+	
+	@JsonProperty("optC")
 	private String optc;
+	
+	@JsonProperty("optD")
 	private String optd;
+	
 	private String answer;
 	private String question;
 

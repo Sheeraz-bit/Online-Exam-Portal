@@ -17,5 +17,6 @@ com\example\Quiz\Management\System\LoginRequest.class
 com\example\Quiz\Management\System\WebConfig.class
 com\example\Quiz\Management\System\ResultDto.class
 com\example\Quiz\Management\System\QuizController.class
+com\example\Quiz\Management\System\ResultValidationService.class
 com\example\Quiz\Management\System\Result.class
 com\example\Quiz\Management\System\QuizRepository.class

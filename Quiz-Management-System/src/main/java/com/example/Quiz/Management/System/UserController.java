@@ -29,17 +29,21 @@ public class UserController {
     	return userService.registerUser(user);
     }
     
-    //Login
+    // user login endpoint
     @PostMapping("/login")
-    public  User login(@RequestBody LoginRequest request) {
-    	return userService.loginUser(request.getEmail(), request.getPassword());
+    public User login(@RequestBody LoginRequest loginData) {
+    	User userResult = userService.loginUser(loginData.getEmail(), loginData.getPassword());
+    	return userResult;
     }
     
-    //Check if user is already attempted the exam
+    // check if user attempted exam or not
     @GetMapping("/attempted/{id}")
     public boolean hasAttempted(@PathVariable Long id) {
-    	User user = userService.findById(id);
-    	return user != null && user.isAttemptedExam();
+    	User foundUser = userService.findById(id);
+    	if (foundUser != null) {
+    		return foundUser.isAttemptedExam();
+    	}
+    	return false;
     }
     
     

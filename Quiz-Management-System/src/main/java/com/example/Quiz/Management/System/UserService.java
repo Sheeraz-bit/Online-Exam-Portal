@@ -44,12 +44,18 @@ public class UserService {
     public User findById(Long id) {
         return uRepo.findById(id).orElse(null);
     }
-    //update user
+    
+    // update user exam attempt status
     public void updateAttemptedExam(Long id, boolean attempted) {
-        User user = findById(id);
+        System.out.println("Updating exam status for user: " + id);
+        
+        User user = uRepo.findById(id).orElse(null);
         if (user != null) {
             user.setAttemptedExam(attempted);
-            uRepo.save(user);
+            uRepo.save(user); // save to database
+            System.out.println("User exam status updated successfully");
+        } else {
+            System.out.println("User not found!");
         }
     }
 		

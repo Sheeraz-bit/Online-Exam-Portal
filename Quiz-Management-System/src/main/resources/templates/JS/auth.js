@@ -17,17 +17,26 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         }
 
         const user = await response.json();
+        console.log("User object received:", user);
 
         // Save user
         localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-        // Redirecting the user to the dashboard
+        // check user role and redirect accordingly
         if (user.role === "student") {
-            window.location.href = "student-dashboard.html";
+            // check if student already attempted exam
+            if (user.attemptedExam == true) {
+                // student already took exam, show results
+                window.location.href = "result.html";
+            } else {
+                // student can take exam
+                window.location.href = "student-dashboard.html";
+            }
         } else if (user.role === "admin") {
+            // admin goes to admin panel
             window.location.href = "admin-dashboard.html";
         } else {
-            alert("Unknown role");
+            alert("Invalid user role!");
         }
     } catch (error) {
         console.error("Error:", error);

@@ -8,7 +8,32 @@ let timer; // to store interval
 let timeLeft = 15 * 60; // 15 minutes in seconds
 
 // Assume you have userId stored somewhere (e.g. after login)
-const userId = localStorage.getItem("userId"); // adjust as needed
+const loggedInUser = localStorage.getItem("loggedInUser");
+let userId = null;
+
+if (loggedInUser) {
+  try {
+    const user = JSON.parse(loggedInUser);
+    console.log("Parsed user object:", user);
+    
+    if (user && user.id) {
+      userId = user.id;
+      console.log("Extracted userId:", userId);
+    } else {
+      console.error("User object does not have id field:", user);
+    }
+  } catch (error) {
+    console.error("Error parsing loggedInUser:", error);
+  }
+} else {
+  console.error("No loggedInUser found in localStorage");
+}
+
+if (!userId) {
+  console.error("No userId found in localStorage");
+  // Redirect to login if no user is found
+  window.location.href = "index.html";
+}
 
 // Elements
 const questionNavDiv = document.getElementById("question-nav");
@@ -142,26 +167,55 @@ function updateTimerDisplay() {
 async function submitExam() {
   clearInterval(timer);
 
-  // Calculate score
-  let score = 0;
-  questions.forEach((q, i) => {
-    if (answers[i] === q.correctAnswer) score++;
-  });
+  // check if user is logged in
+  if (!userId) {
+    alert("Please login first!");
+    window.location.href = "index.html";
+    return;
+  }
 
+  // calculate student score
+  let score = 0;
+  for(let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    const selectedAnswer = answers[i];
+    
+    if (selectedAnswer) {
+      // check which option was selected
+      let selectedLetter = null;
+      if (selectedAnswer === q.optionA) {
+        selectedLetter = 'A';
+      } else if (selectedAnswer === q.optionB) {
+        selectedLetter = 'B';
+      } else if (selectedAnswer === q.optionC) {
+        selectedLetter = 'C';
+      } else if (selectedAnswer === q.optionD) {
+        selectedLetter = 'D';
+      }
+      
+      // check if answer is correct
+      if (selectedLetter === q.correctAnswer) {
+        score = score + 1; // increment score
+      }
+    }
+  }
+
+  // submit result to server
   try {
     const response = await fetch(RESULT_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: Number(userId), score }),
+      body: JSON.stringify({ userId: userId, score: score }),
     });
 
-    if (!response.ok) throw new Error("Failed to submit result");
-
-    alert(`Exam submitted successfully! Your score is: ${score} / ${questions.length}`);
-    // Redirect or show result page
-    window.location.href = "result.html"; // or wherever
+    if (response.ok) {
+      alert("Exam submitted! Your score is: " + score + " out of " + questions.length);
+      window.location.href = "result.html";
+    } else {
+      alert("Error submitting exam!");
+    }
   } catch (error) {
-    alert(error.message);
+    alert("Something went wrong: " + error.message);
   }
 }
 
