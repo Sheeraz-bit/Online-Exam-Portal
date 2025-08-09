@@ -11,7 +11,7 @@ A simple Spring Boot (MVC) web app to manage online quizzes. Students can take a
 - **Spring Data JPA**
 - **PostgreSQL**
 - **Maven**
-- **HTML, CSS, JavaScript
+- **HTML, CSS, JavaScript**
 
 ---
 
