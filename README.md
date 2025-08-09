@@ -5,6 +5,12 @@
 - admin dashboard (completed)
 
 ## Group Members
+### Programer(DB, Front end, Back end): (Group Leader)
+
+- Name: Abdul Nabi Sheeraz
+- Phone: 9022009241
+- Email: sheeraz842122@gmail.com
+
 ### Superwiser:
 
 - Name: Jaywanta Kawale
@@ -16,12 +22,6 @@
 - Name: Shaikh Masum 
 - Phone: 8830597819
 - Email: shaikhmasum319051@gmail.com
-
-### Programer(DB, Front end, Back end): (Group Leader)
-
-- Name: Abdul Nabi Sheeraz
-- Phone: 9022009241
-- Email: sheeraz842122@gmail.com
 
 ### Debugger:
 
