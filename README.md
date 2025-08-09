@@ -1,4 +1,4 @@
-# Online-Exam-Portal (Created by Human: 80%, AI: 20%)
+# Online-Exam-Portal
 
 A simple Spring Boot (MVC) web app to manage online quizzes. Students can take a timed quiz and see their scores. Admins can manage quiz questions, view students, and see results. Data is stored in PostgreSQL.
 
