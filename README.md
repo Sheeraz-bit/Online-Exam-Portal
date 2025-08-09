@@ -1,7 +1,7 @@
 # Online-Exam-Portal
 
 A simple Spring Boot (MVC) web app to manage online quizzes. Students can take a timed quiz and see their scores. Admins can manage quiz questions, view students, and see results. Data is stored in PostgreSQL.
-
+<a href="https://www.buymeacoffee.com/SK_Sheeraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 ---
 
 ## 🛠️ Technologies Used
