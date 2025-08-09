@@ -5,7 +5,7 @@
 - admin dashboard (completed)
 
 ## Group Members
-### Programer(DB, Front end, Back end): (Group Leader)
+### Programmer(DB, Front end, Back end): (Group Leader)
 
 - Name: Abdul Nabi Sheeraz
 - Phone: 9022009241
