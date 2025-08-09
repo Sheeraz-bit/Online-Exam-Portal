@@ -106,6 +106,13 @@ Open: `http://localhost:8082`
 
 ---
 
+## Created By
+
+- Human : 85%
+- AI : 15% (Readme, Debugging Backend, Debugging Fruntend)
+
+---
+
 ## Group Members
 ### Programmer(DB, Front end, Back end): (Group Leader)
 
