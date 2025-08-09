@@ -1,8 +1,8 @@
 # Online-Exam-Portal (Work In Progress)
-## Remaining Tasks
-- submition error
-- result page
-- admin dashboard
+## Remaining Tasks (89% completed)
+- submition error (completed)
+- result page (completed)
+- admin dashboard (almost done)
 
 ## Group Members
 ### Superwiser:
