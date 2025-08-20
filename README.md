@@ -144,4 +144,4 @@ Open: `http://localhost:8082`
 
 - Name: Abdul Muqtasid
 - Phone: 7410717151
-- Email: null
+- Email: amuqsit279@gmail.com
